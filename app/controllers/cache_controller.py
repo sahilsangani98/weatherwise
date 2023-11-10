@@ -96,7 +96,8 @@ def periodic_task():
         # Run the fetch_and_update_metrics function
         fetch_and_update_metrics()
         fetch_and_update_sensors()
-        print("\nIn-memory values updated!") # This can be log
+        print("In-memory Sensors Cache: ", SensorCache()._instance.data)
+        print("In-memory Metric Cache: ", MetricCache()._instance.data.keys())
 
         # Sleep for 5 minutes before the next execution
         time.sleep(300)  # TO-DO: Make it configurable

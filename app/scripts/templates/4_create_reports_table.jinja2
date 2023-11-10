@@ -1,0 +1,47 @@
+-- Check if the table already exists in the schema
+{% if not_exists %}
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM information_schema.tables 
+        WHERE table_schema = '{{ schema_name }}' 
+        AND table_name = '{{ table_name }}'
+    )
+    THEN
+        CREATE TABLE {{ schema_name }}.{{ table_name }} (
+            report_id SERIAL PRIMARY KEY,
+            sensor_id INT NOT NULL,
+            metric_id INT NOT NULL,
+            metric_val VARCHAR(20) NOT NULL,
+            recorded_at TIMESTAMPTZ NOT NULL,
+            created_at TIMESTAMPTZ NOT NULL,
+
+            CONSTRAINT fk_reports_sensor_id
+                FOREIGN KEY (sensor_id) 
+                REFERENCES {{ schema_name }}.sensors_table (sensor_id),
+            
+            CONSTRAINT fk_reports_metric_id
+                FOREIGN KEY (metric_id) 
+                REFERENCES {{ schema_name }}.metrics_table (metric_id)
+        );
+    END IF;
+END$$;
+{% else %}
+CREATE TABLE {{ schema_name }}.{{ table_name }} (
+    report_id SERIAL PRIMARY KEY,
+    sensor_id INT NOT NULL,
+    metric_id INT NOT NULL,
+    metric_val VARCHAR(20) NOT NULL,
+    recorded_at TIMESTAMPTZ NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL,
+
+    CONSTRAINT fk_reports_sensor_id
+        FOREIGN KEY (sensor_id) 
+        REFERENCES {{ schema_name }}.sensors_table (sensor_id),
+    
+    CONSTRAINT fk_reports_metric_id
+        FOREIGN KEY (metric_id) 
+        REFERENCES {{ schema_name }}.metrics_table (metric_id)
+);
+{% endif %}

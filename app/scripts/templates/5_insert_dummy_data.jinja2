@@ -1,0 +1,30 @@
+-- Insert data into metrics_table
+{% for metric in metric_data %}
+    INSERT INTO {{ schema_name }}.metrics_table (metric_name)
+    VALUES
+    ('{{ metric.metric_name }}');
+{% endfor %}
+
+
+-- Insert data into location_table
+{% for location in location_data %}
+    INSERT INTO {{ schema_name }}.location_table (location_name)
+    VALUES
+    ('{{ location.location_name }}');
+{% endfor %};
+
+
+-- Insert data into sensors_table
+{% for sensor in sensor_data %}
+    INSERT INTO {{ schema_name }}.sensors_table (location_id)
+    VALUES
+    ({{ sensor.location_id }});
+{% endfor %};
+
+
+-- Insert data into reports_table
+{% for report in report_data %}
+    INSERT INTO {{ schema_name }}.reports_table (sensor_id, metric_id, metric_val, recorded_at, created_at)
+    VALUES
+    ({{ report.sensor_id }}, {{ report.metric_id }}, {{ report.metric_val }}, '{{ report.recorded_at }}', '{{ report.created_at }}');
+{% endfor %};

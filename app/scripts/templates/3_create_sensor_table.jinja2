@@ -1,0 +1,31 @@
+-- Check if the table already exists in the schema
+{% if not_exists %}
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM information_schema.tables 
+        WHERE table_schema = '{{ schema_name }}' 
+        AND table_name = '{{ table_name }}'
+    )
+    THEN
+        CREATE TABLE {{ schema_name }}.{{ table_name }} (
+            sensor_id SERIAL PRIMARY KEY,
+            location_id INT NOT NULL,
+
+            CONSTRAINT fk_sensor_location_id
+                FOREIGN KEY (location_id) 
+                REFERENCES {{ schema_name }}.location_table (location_id)
+        );
+    END IF;
+END$$;
+{% else %}
+CREATE TABLE {{ schema_name }}.{{ table_name }} (
+    sensor_id SERIAL PRIMARY KEY,
+    location_id INT NOT NULL,
+
+    CONSTRAINT fk_sensor_location_id
+        FOREIGN KEY (location_id) 
+        REFERENCES {{ schema_name }}.location_table (location_id)
+);
+{% endif %}

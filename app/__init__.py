@@ -1,9 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os
-import sys
-print("Let's print sys.path from app/__init__.py")
-print(sys.path)
 
 app = Flask(__name__)
 

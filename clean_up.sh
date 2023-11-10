@@ -18,3 +18,6 @@ if [ -d ".pytest_cache" ]; then
     rm -r ".pytest_cache"
 fi
 
+# To remove .DS_Store
+find . -name '.DS_Store' -type f -delete
+

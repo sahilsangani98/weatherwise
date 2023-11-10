@@ -6,17 +6,13 @@ db = db.DatabaseManager()
 
 class SensorTable(db.Model):
     """
-    Represents the 'reports_table' within the 'weatherwise' schema.
+    Represents the 'sensors_table' within the 'weatherwise' schema.
 
     Attributes:
-    - report_id: Primary key for the table.
     - sensor_id: Integer field for the sensor ID.
-    - metric_id: Integer field for the metric ID.
-    - metric_val: String field representing the value of the metric.
-    - recorded_at: Datetime field for the recorded time.
-    - created_at: Datetime field for the creation time of the record.
+    - location_id: Foreign key for the location table.
     """
-    __tablename__ = 'sensor_table'
+    __tablename__ = 'sensors_table'
     __table_args__ = {'schema': 'weatherwise'}  # Set the default schema here
 
     # Define the SensorTable class that represents the database table

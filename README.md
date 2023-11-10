@@ -18,11 +18,16 @@ To get started with this Weather Metrics API, follow these steps:
     git clone https://github.com/sahilsangani98/weather-metrics-api.git
     ```
 2. Ensure you have Python installed and set up a virtual environment. (Or Use provided env)
+3. Make sure you have PostgreSQL Server up with Database named `weatherdb` and access to `postgres` user with password `1234`
+4. Once you have database available you need to create necessory schema and tables for the application with some dummy data by running:
+    ```bash
+    bash db_setup_with_data.sh
+    ```    
 3. Install the required dependencies listed in the `requirements.txt` file.
 4. Start the application by running:
     ```bash
-    source weather_venv/bin/activate
-    python app.py
+    pip install requirments.txt
+    bash start.sh
     ```
     
 ## Endpoints
